@@ -2,6 +2,7 @@ import 'package:cubit_freezed/counter/cubit/counter_cubit.dart';
 import 'package:cubit_freezed/movie/cubit/movie_cubit.dart';
 import 'package:cubit_freezed/movie/repository/movie_repository.dart';
 import 'package:cubit_freezed/movie/ui/movie_page.dart';
+import 'package:cubit_freezed/theme/theme_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,9 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Cubit Example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      darkTheme: appDarkTheme,
+      themeMode: ThemeMode.dark, // Use the device's theme mode (light or dark)
       home:
       BlocProvider<MoviesCubit>(
         create: (context) => MoviesCubit(
