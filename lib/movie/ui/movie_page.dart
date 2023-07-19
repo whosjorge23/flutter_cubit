@@ -34,34 +34,38 @@ class _MoviesPageState extends State<MoviesPage> {
             final movies = state.movies;
             int randomMovie = random.nextInt(movies.length);
 
-            return Column(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    child: Stack(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Image.network(
-                            movies[randomMovie].urlImage,
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: Container(
+            return ListView.builder(
+              itemCount: movies.length + 1,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return GestureDetector(
+                    child: Hero(
+                      tag: movies[randomMovie].urlImage,
+                      child: Stack(
+                        children: [
+                          SizedBox(
                             width: MediaQuery.of(context).size.width,
-                            color: Colors.black.withOpacity(0.6),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                movies[randomMovie].title,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                            child: Image.network(
+                              movies[randomMovie].urlImage,
+                              fit: BoxFit.fitWidth,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              color: Colors.black.withOpacity(0.6),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  movies[randomMovie].title,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     onTap: () {
                       Navigator.push(
@@ -71,37 +75,29 @@ class _MoviesPageState extends State<MoviesPage> {
                         ),
                       );
                     },
-                  ),
-                ),
-                Text(
-                  "Trending MovieList",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: ListView.builder(
-                    itemCount: movies.length,
-                    itemBuilder: (context, index) => Card(
-                      child: GestureDetector(
-                        child: ListTile(
-                          title: Text(movies[index].title),
-                          leading: CircleAvatar(
-                            backgroundImage: NetworkImage(movies[index].urlImage),
-                          ),
+                  );
+                } else {
+                  final movieIndex = index - 1;
+                  return Card(
+                    child: GestureDetector(
+                      child: ListTile(
+                        title: Text(movies[movieIndex].title),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(movies[movieIndex].urlImage),
                         ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MoviesDetailsPage(selectedMovie: movies[index]),
-                            ),
-                          );
-                        },
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MoviesDetailsPage(selectedMovie: movies[movieIndex]),
+                          ),
+                        );
+                      },
                     ),
-                  ),
-                ),
-              ],
+                  );
+                }
+              },
             );
           } else {
             return Container();
