@@ -1,4 +1,4 @@
-import 'package:cubit_freezed/cubit/counter_state.dart';
+import 'package:cubit_freezed/counter/cubit/counter_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Create Cubit
