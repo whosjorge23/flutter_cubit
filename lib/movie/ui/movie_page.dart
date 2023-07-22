@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:cubit_freezed/movie/cubit/movie_cubit.dart';
 import 'package:cubit_freezed/movie/cubit/movie_state.dart';
+import 'package:cubit_freezed/movie/model/movie_model.dart';
+import 'package:cubit_freezed/movie/ui/components/random_image.dart';
 import 'package:cubit_freezed/movie/ui/movie_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,8 +14,6 @@ class MoviesPage extends StatefulWidget {
 }
 
 class _MoviesPageState extends State<MoviesPage> {
-  Random random = Random();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,50 +32,12 @@ class _MoviesPageState extends State<MoviesPage> {
             );
           } else if (state is LoadedState) {
             final movies = state.movies;
-            int randomMovie = random.nextInt(movies.length);
 
             return ListView.builder(
               itemCount: movies.length + 1,
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return GestureDetector(
-                    child: Hero(
-                      tag: movies[randomMovie].urlImage,
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            child: Image.network(
-                              movies[randomMovie].urlImage,
-                              fit: BoxFit.fitWidth,
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.black.withOpacity(0.6),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  movies[randomMovie].title,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MoviesDetailsPage(selectedMovie: movies[randomMovie]),
-                        ),
-                      );
-                    },
-                  );
+                  return RandomImage(movies: movies);
                 } else {
                   final movieIndex = index - 1;
                   return Card(
