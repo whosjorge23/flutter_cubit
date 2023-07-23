@@ -7,6 +7,7 @@ import 'package:cubit_freezed/movie/ui/components/random_image.dart';
 import 'package:cubit_freezed/movie/ui/movie_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class MoviesPage extends StatefulWidget {
   @override
@@ -49,12 +50,13 @@ class _MoviesPageState extends State<MoviesPage> {
                         ),
                       ),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MoviesDetailsPage(selectedMovie: movies[movieIndex]),
-                          ),
-                        );
+                        context.go('/detailsMovie', extra: movies[movieIndex]);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => MoviesDetailsPage(selectedMovie: movies[movieIndex]),
+                        //   ),
+                        // );
                       },
                     ),
                   );

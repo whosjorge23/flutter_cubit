@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cubit_freezed/movie/model/movie_model.dart';
 import 'package:cubit_freezed/movie/ui/movie_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RandomImage extends StatefulWidget {
   RandomImage({
@@ -60,12 +61,13 @@ class _RandomImageState extends State<RandomImage> {
         ),
       ),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MoviesDetailsPage(selectedMovie: widget.movies[randomMovie]),
-          ),
-        );
+        context.go('/detailsMovie', extra: widget.movies[randomMovie]);
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => MoviesDetailsPage(selectedMovie: widget.movies[randomMovie]),
+        //   ),
+        // );
       },
     );
   }
