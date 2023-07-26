@@ -8,11 +8,21 @@ import 'package:cubit_freezed/theme/theme_data.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
 import 'counter/counter_screen.dart';
 
+// Create a GetIt instance
+final GetIt getIt = GetIt.instance;
+
+void setupGetIt() {
+  // Register Dio as a singleton in GetIt
+  getIt.registerSingleton<Dio>(Dio());
+}
+
 void main() {
+  setupGetIt();
   runApp(MyApp());
 }
 
@@ -31,9 +41,7 @@ class MyApp extends StatelessWidget {
             pageBuilder: (context, state) => MaterialPage(
               child: BlocProvider<MoviesCubit>(
                 create: (context) => MoviesCubit(
-                  repository: MovieRepository(
-                    Dio(),
-                  ),
+                  repository: MovieRepository(), // Use the MovieRepository constructor without the Dio parameter
                 ),
                 child: MoviesPage(),
               ),
